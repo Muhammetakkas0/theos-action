@@ -4,7 +4,8 @@ ARCHS = arm64 arm64e
 include $(THEOS)/makefiles/common.mk
 
 TWEAK_NAME = Akgram
+
 Akgram_FILES = Tweak.x
 Akgram_CFLAGS = -fobjc-arc
 
-include $(THEOS_MAKE_PATH)/tweak.mk
+include $(THEOS_MAKEFILE_ID)/tweak.mk
