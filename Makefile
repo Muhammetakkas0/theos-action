@@ -8,4 +8,4 @@ TWEAK_NAME = Akgram
 Akgram_FILES = Tweak.x
 Akgram_CFLAGS = -fobjc-arc
 
-include $(THEOS_MAKEFILE_ID)/tweak.mk
+include $(THEOS)/makefiles/tweak.mk
