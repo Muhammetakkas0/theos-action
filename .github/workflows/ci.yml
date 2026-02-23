@@ -1,35 +1,26 @@
 name: CI
-
-on: 
+on:
   push:
-  schedule:
-    - cron: '0 9 15 * *'
+    branches:
+      - main
+  workflow_dispatch:
 
 jobs:
-  build-logos:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [macos-latest, ubuntu-latest]
-
+  build:
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-        with:
-          repository: Randomblock1/FleetsBGone
-          submodules: true
+      - name: Checkout
+        uses: actions/checkout@v3
 
       - name: Prepare Theos
-        uses: randomblock1/theos-action@main
+        uses: Randomblock1/theos-action@v1
 
-      - name: Build package
+      - name: Build Package
         run: |
-          rm -f packages/*
           make package FINALPACKAGE=1
-
-      - name: Upload package
+          
+      - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: "Package built by ${{ matrix.os }}"
-          path: ${{ github.workspace }}/packages/*.deb
-
-  # TODO: Add a job to build an Orion tweak
+          name: Akgram-File
+          path: packages/*.dylib
