@@ -2,23 +2,20 @@ name: CI
 on: [push, workflow_dispatch]
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup Theos
-        uses: theos/setup-theos-action@v1
+        uses: randomblock1/theos-action@v1
 
       - name: Build Package
         run: |
-          export THEOS=$GITHUB_WORKSPACE/theos
           make package FINALPACKAGE=1
-        env:
-          THEOS: ${{ github.workspace }}/theos
-
+          
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Akgram-Final-File
+          name: Akgram-Final
           path: packages/*.deb
