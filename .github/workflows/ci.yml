@@ -1,10 +1,5 @@
 name: CI
-on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
-
+on: [push, workflow_dispatch]
 jobs:
   build:
     runs-on: macos-latest
@@ -13,15 +8,17 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup Theos
-        uses: randomblock1/theos-action@v1
+        uses: theos/setup-theos-action@v1
 
-      - name: Build Tweak
+      - name: Build Package
         run: |
-          sed -i '1d' Tweak.x || true
+          export THEOS=$GITHUB_WORKSPACE/theos
           make package FINALPACKAGE=1
-          
-      - name: Upload Result
+        env:
+          THEOS: ${{ github.workspace }}/theos
+
+      - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Akgram-Final
+          name: Akgram-Final-File
           path: packages/*.deb
